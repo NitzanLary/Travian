@@ -64,7 +64,7 @@ def write_csv(records: list[list[str]], headers: list[str], output_path: str) ->
 
 
 def main():
-    URL = "https://ts21.x2.international.travian.com/map.sql"
+    URL = "https://ts50.x5.america.travian.com/map.sql"
     output_file = "map.csv"
     from_file = False # Change to False to fetch from URL
 

@@ -1,0 +1,38 @@
+name: Daily Travian Map Data Collection
+
+on:
+  schedule:
+    # Run daily at 00:01 UTC+1
+    - cron: '1 23 * * *'
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  collect-map-data:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests
+        
+    - name: Run sql2csv script
+      run: python sql2csv.py
+      
+    - name: Upload map.csv as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: travian-map-csv-${{ github.run_number }}
+        path: map.csv
+        retention-days: 30
+        
+    - name: Display success message
+      run: echo "Successfully generated and uploaded map.csv for run ${{ github.run_number }}"

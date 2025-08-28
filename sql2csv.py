@@ -64,7 +64,7 @@ def write_csv(records: list[list[str]], headers: list[str], output_path: str) ->
 
 
 def main():
-    URL = "https://ts50.x5.america.travian.com/map.sql"
+    URL = "https://ts21.x2.international.travian.com/map.sql"
     output_file = "map.csv"
     from_file = False # Change to False to fetch from URL
 
@@ -76,6 +76,9 @@ def main():
         else:
             print(f"Fetching SQL from {URL}…", file=sys.stderr)
             sql_text = fetch_sql(URL)
+            print(f"Saving fetched SQL to map.sql…", file=sys.stderr)
+            with open("map.sql", "w", encoding="utf-8") as f:
+                f.write(sql_text)
 
         print("Extracting INSERT records…", file=sys.stderr)
         raw_records = extract_value_strings(sql_text)

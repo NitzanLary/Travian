@@ -27,12 +27,14 @@ jobs:
     - name: Run sql2csv script
       run: python sql2csv.py
       
-    - name: Upload map.csv as artifact
+    - name: Upload map.csv and map.sql as a single artifact
       uses: actions/upload-artifact@v4
       with:
-        name: travian-map-csv-${{ github.run_number }}
-        path: map.csv
+        name: travian-map-files-${{ github.run_number }}
+        path: |
+          map.csv
+          map.sql
         retention-days: 30
-        
+
     - name: Display success message
-      run: echo "Successfully generated and uploaded map.csv for run ${{ github.run_number }}"
+      run: echo "Successfully generated and uploaded map.csv and map.sql for run ${{ github.run_number }}"
